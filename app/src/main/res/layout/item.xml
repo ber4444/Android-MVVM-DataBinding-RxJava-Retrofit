@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="item" type="com.gabor.GistList.models.ItemViewModel"/>
+        <import type="android.databinding.ObservableField" />
+        <variable name="imagesVisible" type="ObservableField&lt;Boolean&gt;" />
+    </data>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:animateLayoutChanges="true"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        app:imageUrl="@{item.avatarUrl}"
+        app:imageVisibility="@{imagesVisible}"
+        tools:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{item.filename}"
+                tools:text="myFileName.java" />
+
+            <TextView
+                android:id="@+id/item_file_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="0"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{String.valueOf(safeUnbox(item.size))}"
+                tools:text="file size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_file_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{item.type}"
+            tools:text="application/java" />
+
+
+        <TextView
+            android:id="@+id/item_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{item.language}"
+            tools:text="Java" />
+    </LinearLayout>
+    </LinearLayout>
+</layout>

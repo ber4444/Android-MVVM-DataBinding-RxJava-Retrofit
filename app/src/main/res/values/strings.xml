@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GistList</string>
+    <string name="hide_images">Hide images</string>
+    <string name="show_images">Show images</string>
+</resources>
