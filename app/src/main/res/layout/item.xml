@@ -19,7 +19,7 @@
         android:layout_width="52dp"
         android:layout_height="52dp"
         app:imageUrl="@{item.avatarUrl}"
-        app:imageVisibility="@{imagesVisible}"
+        app:imageVisibility="@{safeUnbox(imagesVisible)}"
         tools:src="@mipmap/ic_launcher" />
 
     <LinearLayout
