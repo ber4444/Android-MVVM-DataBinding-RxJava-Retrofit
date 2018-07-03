@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeButtonTitle() {
-        button.setTitle(! viewModel.imagesVisible.get() ? R.string.show_images : R.string.hide_images);
+        button.setTitle(Boolean.FALSE.equals(viewModel.imagesVisible.get()) ? R.string.show_images : R.string.hide_images);
     }
 
     @Override public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(STATE_IMAGES_VISIBILITY, viewModel.imagesVisible.get());
+        savedInstanceState.putBoolean(STATE_IMAGES_VISIBILITY, Boolean.TRUE.equals(viewModel.imagesVisible.get()));
         super.onSaveInstanceState(savedInstanceState);
     }
 

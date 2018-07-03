@@ -28,6 +28,6 @@ class FeedViewModel {
     }
 
     void toggleImageVisibility() {
-        imagesVisible.set(!imagesVisible.get());
+        imagesVisible.set(Boolean.FALSE.equals(imagesVisible.get()));
     }
 }

@@ -33,7 +33,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ListViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public @NonNull ListViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemBinding binding = ItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         binding.setImagesVisible(imagesVisible);
         return new ViewHolder(binding);
@@ -41,7 +41,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(items.get(position));
     }
 
