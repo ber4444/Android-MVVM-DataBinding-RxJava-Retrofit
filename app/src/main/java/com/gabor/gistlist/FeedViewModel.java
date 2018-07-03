@@ -1,8 +1,8 @@
-package com.gabor.GistList;
+package com.gabor.gistlist;
 
 import android.databinding.ObservableField;
 
-import com.gabor.GistList.models.ItemViewModel;
+import com.gabor.gistlist.models.ItemViewModel;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

@@ -1,4 +1,4 @@
-package com.gabor.GistList.models;
+package com.gabor.gistlist.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

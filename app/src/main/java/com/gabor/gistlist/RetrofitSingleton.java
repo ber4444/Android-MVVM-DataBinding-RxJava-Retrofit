@@ -1,6 +1,6 @@
-package com.gabor.GistList;
+package com.gabor.gistlist;
 
-import com.gabor.GistList.models.Gist;
+import com.gabor.gistlist.models.Gist;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.gabor.GistList;
+package com.gabor.gistlist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.gabor.GistList.models.ItemViewModel;
+import com.gabor.gistlist.models.ItemViewModel;
 
 import rx.subscriptions.CompositeSubscription;
 

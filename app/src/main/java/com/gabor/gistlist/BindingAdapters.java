@@ -1,4 +1,4 @@
-package com.gabor.GistList;
+package com.gabor.gistlist;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
@@ -10,7 +10,7 @@ public class BindingAdapters {
 
     @BindingAdapter("imageUrl")
     public static void loadImage(ImageView view, String url) {
-        Picasso.with(view.getContext()).load(url).into(view);
+        Picasso.get().load(url).into(view);
     }
 
     @BindingAdapter("imageVisibility")

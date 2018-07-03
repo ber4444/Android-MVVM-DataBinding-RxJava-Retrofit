@@ -1,4 +1,4 @@
-package com.gabor.GistList;
+package com.gabor.gistlist;
 
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gabor.GistList.databinding.ItemBinding;
-import com.gabor.GistList.models.ItemViewModel;
+import com.gabor.gistlist.databinding.ItemBinding;
+import com.gabor.gistlist.models.ItemViewModel;
 
 import java.util.ArrayList;
 

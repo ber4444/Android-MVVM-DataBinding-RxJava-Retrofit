@@ -1,4 +1,4 @@
-package com.gabor.GistList.models;
+package com.gabor.gistlist.models;
 
 import java.util.Iterator;
 
