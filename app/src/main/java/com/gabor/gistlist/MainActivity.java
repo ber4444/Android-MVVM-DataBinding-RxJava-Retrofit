@@ -1,5 +1,6 @@
 package com.gabor.gistlist;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.gabor.gistlist.models.ItemViewModel;
+import com.gabor.gistlist.models.Item;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -19,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
     private ListViewAdapter adapter;
-    private final FeedViewModel viewModel = new FeedViewModel();
-    static final String STATE_IMAGES_VISIBILITY = "imagesVisibility";
+    private FeedViewModel viewModel;
     private MenuItem button;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
 
         RecyclerView listView = findViewById(R.id.listview);
         listView.setHasFixedSize(true);
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         subscriptions.add(viewModel.loadFeed().subscribe(this::onResponse, this::onFailure));
     }
 
-    private void onResponse(ItemViewModel viewModel) {
+    private void onResponse(Item viewModel) {
         adapter.add(viewModel);
     }
 
@@ -48,16 +49,6 @@ public class MainActivity extends AppCompatActivity {
         button.setTitle(Boolean.FALSE.equals(viewModel.imagesVisible.get()) ? R.string.show_images : R.string.hide_images);
     }
 
-    @Override public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean(STATE_IMAGES_VISIBILITY, Boolean.TRUE.equals(viewModel.imagesVisible.get()));
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        viewModel.imagesVisible.set(savedInstanceState.getBoolean(STATE_IMAGES_VISIBILITY));
-    }
-
     @Override public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         changeButtonTitle();
@@ -65,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override protected void onDestroy() {
-        subscriptions.unsubscribe(); // note that this should be done in onDetachedFromWindow
-                                     // whenever we have an Android View as an MVVM view
+        subscriptions.unsubscribe();
         super.onDestroy();
     }
 

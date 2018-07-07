@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="item" type="com.gabor.gistlist.models.ItemViewModel"/>
+        <variable name="item" type="com.gabor.gistlist.models.Item"/>
         <import type="android.databinding.ObservableField" />
         <variable name="imagesVisible" type="ObservableField&lt;Boolean&gt;" />
     </data>

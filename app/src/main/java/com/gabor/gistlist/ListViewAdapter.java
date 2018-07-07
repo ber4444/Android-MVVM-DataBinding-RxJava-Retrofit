@@ -8,20 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gabor.gistlist.databinding.ItemBinding;
-import com.gabor.gistlist.models.ItemViewModel;
+import com.gabor.gistlist.models.Item;
 
 import java.util.ArrayList;
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
 
-    private final ArrayList<ItemViewModel> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
     private final ObservableField<Boolean> imagesVisible;
 
     ListViewAdapter(ObservableField<Boolean> imagesVisible) {
         this.imagesVisible = imagesVisible;
     }
 
-    void add(ItemViewModel item) {
+    void add(Item item) {
         items.add(item);
         this.notifyItemInserted(items.size() - 1);
     }
@@ -54,7 +54,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         ViewHolder(View view) {
             super(view);
         }
-        void bind(@NonNull ItemViewModel item) {
+        void bind(@NonNull Item item) {
             binding.setItem(item);
             binding.executePendingBindings();
         }
