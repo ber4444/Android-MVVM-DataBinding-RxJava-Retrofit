@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="item" type="com.gabor.gistlist.models.Item"/>
-        <import type="android.databinding.ObservableField" />
+        <import type="androidx.databinding.ObservableField" />
         <variable name="imagesVisible" type="ObservableField&lt;Boolean&gt;" />
     </data>
     <LinearLayout
