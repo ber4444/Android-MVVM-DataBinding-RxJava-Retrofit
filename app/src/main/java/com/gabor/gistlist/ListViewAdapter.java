@@ -1,34 +1,35 @@
 package com.gabor.gistlist;
 
-import androidx.databinding.ObservableField;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gabor.gistlist.databinding.ItemBinding;
 import com.gabor.gistlist.models.Item;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
 
-    private final ArrayList<Item> items = new ArrayList<>();
+    private List<Item> items;
     private final ObservableField<Boolean> imagesVisible;
 
     ListViewAdapter(ObservableField<Boolean> imagesVisible) {
         this.imagesVisible = imagesVisible;
     }
 
-    void add(Item item) {
-        items.add(item);
-        this.notifyItemInserted(items.size() - 1);
+    void add(List<Item> list) {
+        items = list;
+        this.notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items == null ? 0 : items.size();
     }
 
     // Create new views (invoked by the layout manager)

@@ -1,24 +1,27 @@
 package com.gabor.gistlist;
 
-import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.gabor.gistlist.models.Item;
 
-import rx.subscriptions.CompositeSubscription;
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * A view that dispatches the user's actions to the view model.
  */
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
-    private final CompositeSubscription subscriptions = new CompositeSubscription();
     private ListViewAdapter adapter;
     private FeedViewModel viewModel;
     private MenuItem button;
@@ -34,15 +37,10 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ListViewAdapter(viewModel.imagesVisible);
         listView.setAdapter(adapter);
 
-        subscriptions.add(viewModel.loadFeed().subscribe(this::onResponse, this::onFailure));
-    }
-
-    private void onResponse(Item viewModel) {
-        adapter.add(viewModel);
-    }
-
-    private void onFailure(Throwable t) {
-        Log.e("Network error: ", t.getMessage());
+        final Observer<List<Item>> observer = list -> {
+            adapter.add(list);
+        };
+        viewModel.state.observe(this, observer);
     }
 
     private void changeButtonTitle() {
@@ -53,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
         changeButtonTitle();
         return true;
-    }
-
-    @Override protected void onDestroy() {
-        subscriptions.unsubscribe();
-        super.onDestroy();
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {

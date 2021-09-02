@@ -1,37 +1,58 @@
-package com.gabor.gistlist;
+package com.gabor.gistlist
 
-import androidx.lifecycle.ViewModel;
-import androidx.databinding.ObservableField;
+import android.util.Log
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.gabor.gistlist.models.Item
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers.io
+import javax.inject.Inject
 
-import com.gabor.gistlist.models.Item;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A view model that exposes streams of data to the view
  * and also saves state that survives configuration changes.
  * Created by gabor on 12/3/17.
  */
+@HiltViewModel
+class FeedViewModel @Inject constructor(
+    private val repo: Repository
+): ViewModel() {
 
-@SuppressWarnings("WeakerAccess")
-public class FeedViewModel extends ViewModel {
+    private val _state = MutableLiveData<List<Item>>()
+    @JvmField
+    val state: LiveData<List<Item>> = _state
+    private val disposables = CompositeDisposable()
 
-    final ObservableField<Boolean> imagesVisible = new ObservableField<>(true);
+    init {
+        loadFeed()
+    }
     // if we wanted to, could save the list itself here too
-
-    Observable<Item> loadFeed() {
-        return RetrofitSingleton.getInstance().provideClient()
-                .getGistsObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(Observable::from)
-                .filter(gist -> gist.owner != null)
-                .map(Item::new);
+    private fun loadFeed() {
+        disposables.add(repo.getData()
+            .subscribeOn(io())
+            .observeOn(io())
+            .subscribe(
+                { if (it.isSuccessful) it.body()?.let { list ->
+                    _state.postValue(list
+                        .filter { l -> l.owner != null }
+                        .map { i -> Item(i) }
+                        .sortedBy { l -> l.size }) } },
+                { Log.e("Network error: ", it.message.orEmpty()); }
+            ))
     }
 
-    void toggleImageVisibility() {
-        imagesVisible.set(Boolean.FALSE.equals(imagesVisible.get()));
+    override fun onCleared() {
+        disposables.dispose()
+        super.onCleared()
+    }
+
+    @JvmField
+    val imagesVisible = ObservableField(true)
+    fun toggleImageVisibility() {
+        imagesVisible.set(false == imagesVisible.get())
     }
 }
