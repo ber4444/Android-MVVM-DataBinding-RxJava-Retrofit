@@ -31,7 +31,7 @@ class FeedViewModel @Inject constructor(
         loadFeed()
     }
     // if we wanted to, could save the list itself here too
-    private fun loadFeed() {
+    fun loadFeed() {
         disposables.add(repo.getData()
             .subscribeOn(io())
             .observeOn(io())
